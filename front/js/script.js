@@ -5,6 +5,7 @@ fetch(url) // on va chercher l'API avec la methode fetch
     .then(function(listCanape) {
         const listProducts = document.getElementById("items")
 
+        // à verifier
         for (let index = 0; index < listCanape.length; index++) {
             const canape = listCanape[index];
 
