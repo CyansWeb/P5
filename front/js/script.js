@@ -1,6 +1,7 @@
+// Récupérer les produits sur l'API via le port 3000.
 const url = "http://localhost:3000/api/products"
-fetch(url)
-    .then((response) => response.json())
+fetch(url) // on va chercher l'API avec la methode fetch
+    .then((response) => response.json()) // on récupère les informations de l'API qu'on va mettre au format json
     .then(function(listCanape) {
         const listProducts = document.getElementById("items")
 
