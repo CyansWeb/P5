@@ -16,6 +16,7 @@ fetch(url)
 
             //console.log(listCanape)
 
+            //Lien vers page produit pour afficher un seul produit
             let text = `<a href="./product.html?id=${canape._id}"> <article> <img src="${canape.imageUrl}" alt="${canape.altTxt}"> <h3 class="productName"> ${canape.name} </h3> <p class="productDescription"> ${canape.description}</p></article>`;
             listProducts.innerHTML += text;
         }
