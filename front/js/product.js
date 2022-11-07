@@ -1,19 +1,47 @@
-// Je veux récupérer l'ID dans l'URL avec URLSearchParams
+//On récupère l'id du canape correspondant dans le lien
 const idProduct = new URL(window.location.href).searchParams.get("id");
 
-// Puis une 2ème requête fetch au serveur pour afficher les infos du produit 
+//On contacte l'API en précisant qu'on est dans le context Id
 fetch("http://localhost:3000/api/products/" + idProduct)
-    .then((response) => response.json())
-    //.then((res) => console.log(res)) me retourne l'ensemble des éléments
-    .then((canape) => {
-        // Je vais chercher les éléments HTML à actualiser
-        let picture = document.querySelector(".item__img"); // récupère la photo du produit
-        let title = document.getElementById("title"); // récupère l'id title du fihier HTML
-        let price = document.getElementById("price"); // récupère l'id price
-        let description = document.getElementById("description"); // récupère l'id description
-        let colors = document.getElementById("colors"); // récupère l'id color
+    .then(function(response) {
+        return response.json();
+    })
 
-        description.innerHTML = canape.description; //  (NDM innerHTML) récupère ou définit la syntaxe HTML décrivant le descendant de l'élément "description".
+
+.then((canape) => {
+
+        //On récupère dans des constantes tous les éléments HTML qu'on va modifier 
+        const title = document.getElementById("title");
+        const description = document.getElementById("description");
+        const itemImg = document.getElementsByClassName("item__img");
+        let price = document.getElementById("price");
+
+
+        //On remplace dans le code HTML
+        description.innerHTML = canape.description;
+        title.innerHTML = canape.name;
+        price.innerHTML = canape.price;
+
+        //On initialise une variable text qui contiendra les informations de nos images
+        let text = "";
+        text = text + `<img src="${canape.imageUrl}"alt ="${canape.altTxt}"></img>`;
+
+        //On précise bien l'index [0] car c'est un selecteur class et non Id donc stocké dans un Array
+        itemImg[0].innerHTML = text;
+
+
+        //On initalise la constante qu'on utilisera pour stocker les couleurs de nos canapés
+        const colors = canape.colors;
+        let textColors = " ";
+
+        //On crée une boucle pour aller chercher chaque couleur disponible dans l'API
+        colors.forEach((colors, index) =>
+            textColors = textColors + `<option value="${colors}">${colors}</option>`);
+
+        //On remplace les couleurs dans le menu <option> du HTML
+        const colorSelect = document.getElementById("colors");
+        colorSelect.innerHTML = textColors
+
     })
     .catch(function(error) {
         console.error(error)
